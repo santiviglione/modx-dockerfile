@@ -38,9 +38,7 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 	TERM=dumb php -- "$MODX_DB_HOST" "$MODX_DB_USER" "$MODX_DB_PASSWORD" "$MODX_DB_NAME" <<'EOPHP'
 <?php
 $stderr = fopen('php://stderr', 'w');
-
 list($host, $port) = explode(':', $argv[1], 2);
-
 $maxTries = 10;
 do {
 	$mysql = new mysqli($host, $argv[2], $argv[3], '', (int)$port);
@@ -53,15 +51,12 @@ do {
 		sleep(3);
 	}
 } while ($mysql->connect_error);
-
 if (!$mysql->query('CREATE DATABASE IF NOT EXISTS `' . $mysql->real_escape_string($argv[4]) . '` ' .
 	'DEFAULT CHARACTER SET = \'utf8\' DEFAULT COLLATE \'utf8_general_ci\'')) {
-
 	fwrite($stderr, "\n" . 'MySQL "CREATE DATABASE" Error: ' . $mysql->error . "\n");
 	$mysql->close();
 	exit(1);
 }
-
 $mysql->close();
 EOPHP
 
@@ -94,15 +89,12 @@ EOPHP
 	<https_port>443</https_port>
 	<http_host>localhost</http_host>
 	<cache_disabled>0</cache_disabled>
-
 	<inplace>1</inplace>
 	<unpacked>0</unpacked>
 	<language>en</language>
-
 	<cmsadmin>$MODX_ADMIN_USER</cmsadmin>
 	<cmspassword>$MODX_ADMIN_PASSWORD</cmspassword>
 	<cmsadminemail>$MODX_ADMIN_EMAIL</cmsadminemail>
-
 	<core_path>/var/www/html/core/</core_path>
 	<context_mgr_path>/var/www/html/manager/</context_mgr_path>
 	<context_mgr_url>/manager/</context_mgr_url>
@@ -110,7 +102,6 @@ EOPHP
 	<context_connectors_url>/connectors/</context_connectors_url>
 	<context_web_path>/var/www/html/</context_web_path>
 	<context_web_url>/</context_web_url>
-
 	<remove_setup_directory>1</remove_setup_directory>
 </modx>
 EOF
@@ -122,7 +113,6 @@ EOF
 <?php
 define('MODX_API_MODE', true);
 require_once 'index.php';
-
 if (version_compare($modx->getVersionData()['full_version'], $argv[1]) == -1) {
 	echo 1;
 }
