@@ -1,6 +1,6 @@
 FROM php:7-fpm
 
-MAINTAINER Vadim Homchik <homchik@gmail.com> (@vh)
+MAINTAINER Santiago Viglione <santiviglione@gmail.com>
 
 # install the PHP extensions we need
 RUN apt-get update && apt-get install -y libpng12-dev libjpeg-dev unzip sudo && rm -rf /var/lib/apt/lists/* \
